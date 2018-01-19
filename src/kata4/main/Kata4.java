@@ -6,13 +6,33 @@ import kata4.model.Histogram;
 import kata4.view.*;
 
 public class Kata4 {
+
+    public static void main(String[] args) throws IOException {
+        Kata4 kata4 = new Kata4();
+        kata4.execute();        
+    }
     
-    public static void main(String[] args) throws IOException {      
-        String fileName = "emailsFile.txt";      
-        List<String> mailList = MailListReader.read(fileName);
-        Histogram<String> histogram = MailHistogramBuilder.build(mailList); 
-        HistogramDisplay histogramDisplay = new HistogramDisplay(histogram);      
+    private final String fileName = "emailsFile.txt";
+    private List<String> mailList;
+    private Histogram<String> histogram;
+    
+    private void execute() throws IOException {
+        input();
+        process();
+        output();
+    }
+
+    private void input() throws IOException {
+        mailList = MailListReader.read(fileName);
+    }
+
+    private void process() {
+        histogram = MailHistogramBuilder.build(mailList);        
+    }
+    
+    private void output() {
+        HistogramDisplay histogramDisplay = new HistogramDisplay(histogram);
         histogramDisplay.execute();
-    } 
+    }
     
 }

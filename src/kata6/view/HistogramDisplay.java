@@ -14,11 +14,13 @@ public class HistogramDisplay<T> extends ApplicationFrame{
 
     private final Histogram<T> histogram;
     private final String nameEjeX; 
+    private final String nameEjeY; 
             
-    public HistogramDisplay(Histogram<T> histogram, String nameEjeX) {
+    public HistogramDisplay(Histogram<T> histogram, String nameEjeX, String nameEjeY) {
         super("HISTOGRAMA");
         this.histogram = histogram;
         this.nameEjeX = nameEjeX; 
+        this.nameEjeY = nameEjeY; 
         setContentPane(createPanel());
         pack();
     }
@@ -35,17 +37,20 @@ public class HistogramDisplay<T> extends ApplicationFrame{
     
     private JFreeChart createChart(DefaultCategoryDataset param) {
         JFreeChart chart = ChartFactory.createBarChart(
-           "Histograma JFreeChart", nameEjeX,"Nº emails", param, 
+           "Histograma JFreeChart", nameEjeX, nameEjeY, param, 
             PlotOrientation.VERTICAL, false, rootPaneCheckingEnabled,
-            rootPaneCheckingEnabled);   
+            rootPaneCheckingEnabled);
         return chart;
     }
     
     private DefaultCategoryDataset createDataset() {
         DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-        for (T key : histogram.keySet()) {
+        if (histogram != null){
+           for (T key : histogram.keySet()) {
             dataSet.addValue(histogram.get(key), "", (Comparable) key);
+            }    
         }
+        
         return dataSet;
     }
     
